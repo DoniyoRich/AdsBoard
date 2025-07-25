@@ -1,7 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
-from django.urls import reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework import status
@@ -10,6 +9,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      UpdateAPIView)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from config import settings
@@ -85,7 +85,9 @@ class PasswordResetView(APIView):
         token = PasswordResetTokenGenerator().make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-        reset_url = request.build_absolute_uri(reverse('password_recovery_confirm') + f'?uid={uid}&token={token}')
+        reset_url = request.build_absolute_uri(
+            f"/reset-password-confirm/?uid={uid}&token={token}"
+        )
 
         send_mail(
             'Сброс пароля',
