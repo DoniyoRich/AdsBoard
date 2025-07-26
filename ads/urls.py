@@ -1,9 +1,12 @@
 from django.urls import path
 
 from ads.apps import AdsConfig
-from ads.views import AdsTotalListAPIView, AdsUserListAPIView, AdCreateAPIView, AdUpdateAPIView, AdDetailAPIView, \
-    AdDeleteAPIView, FeedbackListAPIView, FeedbackCreateAPIView, FeedbackUpdateAPIView, FeedbackDetailAPIView, \
-    FeedbackDeleteAPIView
+from ads.views import (AdCreateAPIView, AdDeleteAPIView, AdDetailAPIView,
+                       AdsTotalListAPIView, AdsUserListAPIView,
+                       AdUpdateAPIView, FeedbackCreateAPIView,
+                       FeedbackDeleteAPIView, FeedbackDetailAPIView,
+                       FeedbackListAPIView, FeedbackUpdateAPIView,
+                       FeedbackUserListAPIView)
 
 app_name = AdsConfig.name
 
@@ -18,6 +21,7 @@ urlpatterns = [
 
     # эндпойнты для отзывов
     path("feedbacks/", FeedbackListAPIView.as_view(), name="feedbacks_list"),
+    path("feedbacks/user/", FeedbackUserListAPIView.as_view(), name="feedbacks_user_list"),
     path("feedback/create/", FeedbackCreateAPIView.as_view(), name="feedback_create"),
     path("feedback/update/<int:pk>/", FeedbackUpdateAPIView.as_view(), name="feedback_update"),
     path("feedback/detail/<int:pk>/", FeedbackDetailAPIView.as_view(), name="feedback_detail"),

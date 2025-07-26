@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from rest_framework.exceptions import ValidationError
 
 from config import settings
 

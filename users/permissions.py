@@ -1,7 +1,5 @@
 from rest_framework import permissions
 
-from config.constants import USER_ROLE
-
 
 class IsAdmin(permissions.BasePermission):
     """
@@ -9,7 +7,7 @@ class IsAdmin(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.role == USER_ROLE[0][1]
+        return request.user.is_staff == True or request.user.is_superuser == True
 
 
 class IsOwner(permissions.BasePermission):
@@ -18,6 +16,4 @@ class IsOwner(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        if obj.owner == request.user:
-            return True
-        return False
+        return obj.author == request.user
