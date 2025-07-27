@@ -7,6 +7,7 @@ from rest_framework import permissions
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from config import settings
+from config.constants import LEAD_ENDPOINT_STR
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -21,8 +22,6 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
     authentication_classes=[JWTAuthentication],
 )
-
-LEAD_ENDPOINT_STR = "api/v1/"
 
 urlpatterns = [
     path(LEAD_ENDPOINT_STR + "admin/", admin.site.urls),
