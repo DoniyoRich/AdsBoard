@@ -6,6 +6,9 @@ from config.constants import USER_ROLE
 
 
 class CustomUserManager(BaseUserManager):
+    """
+    Кастомный менеджер пользователя.
+    """
     def _create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("Email должен быть установлен")
