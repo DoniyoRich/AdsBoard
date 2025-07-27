@@ -23,24 +23,24 @@ class Ad(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"Товар: {self.title}. Цена: {self.price} р."
+        return f"Объявление: {self.title}. Цена: {self.price} р."
 
 
 class Feedback(models.Model):
     """
-    Модель отзыва.
+    Модель комментарция.
     """
-    text = models.TextField(verbose_name="Текст отзыва", default="", blank=True)
+    text = models.TextField(verbose_name="Текст комментария", default="", blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Автор",
                                related_name="user_feedbacks")
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name="Объявление", related_name="feedbacks")
-    created_at = models.DateTimeField(verbose_name="Дата и время создания отзыва", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="Дата и время изменения отзыва", auto_now=True)
+    created_at = models.DateTimeField(verbose_name="Дата и время создания комментария", auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name="Дата и время изменения комментария", auto_now=True)
 
     class Meta:
-        verbose_name = "Отзыв"
-        verbose_name_plural = "Отзывы"
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарий"
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"Отзыв от {self.author} на {self.ad.title}"
+        return f"Комментарий от {self.author} на {self.ad.title}"

@@ -19,7 +19,7 @@ urlpatterns = [
     path("detail/<int:pk>/", AdDetailAPIView.as_view(), name="ad_detail"),
     path("delete/<int:pk>/", AdDeleteAPIView.as_view(), name="ad_delete"),
 
-    # эндпойнты для отзывов
+    # эндпойнты для комментариев
     path("feedbacks/", FeedbackListAPIView.as_view(), name="feedbacks_list"),
     path("feedbacks/user/", FeedbackUserListAPIView.as_view(), name="feedbacks_user_list"),
     path("feedback/create/", FeedbackCreateAPIView.as_view(), name="feedback_create"),

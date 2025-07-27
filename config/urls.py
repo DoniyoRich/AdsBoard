@@ -22,13 +22,15 @@ schema_view = get_schema_view(
     authentication_classes=[JWTAuthentication],
 )
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("ads/", include("ads.urls", namespace="ads")),
-    path("users/", include("users.urls", namespace="users")),
+LEAD_ENDPOINT_STR = "api/v1/"
 
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+urlpatterns = [
+    path(LEAD_ENDPOINT_STR + "admin/", admin.site.urls),
+    path(LEAD_ENDPOINT_STR + "ads/", include("ads.urls", namespace="ads")),
+    path(LEAD_ENDPOINT_STR + "users/", include("users.urls", namespace="users")),
+
+    path(LEAD_ENDPOINT_STR + "swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path(LEAD_ENDPOINT_STR + "redoc/", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 if settings.DEBUG:

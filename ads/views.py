@@ -1,4 +1,4 @@
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
@@ -17,15 +17,15 @@ class AdsTotalListAPIView(ListAPIView):
     """
     serializer_class = AdSerializer
     pagination_class = AdPaginator
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
     permission_classes = [AllowAny]
 
     def get_queryset(self):
         return Ad.objects.all() \
+            .order_by('-created_at') \
             .select_related('author') \
-            .prefetch_related('feedbacks') \
-            .order_by('-created_at')
+            .prefetch_related('feedbacks')
 
 
 class AdsUserListAPIView(ListAPIView):
@@ -34,8 +34,8 @@ class AdsUserListAPIView(ListAPIView):
     """
     serializer_class = AdSerializer
     pagination_class = AdPaginator
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title']
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -83,10 +83,10 @@ class AdDeleteAPIView(DestroyAPIView):
     permission_classes = [IsAuthenticated & (IsAdmin | IsOwner)]
 
 
-# Набор API для отзывов
+# Набор API для комментариев
 class FeedbackListAPIView(ListAPIView):
     """
-    Список всех отзывов.
+    Список всех комментариев.
     """
     serializer_class = FeedbackSerializer
     queryset = Feedback.objects.all()
@@ -96,7 +96,7 @@ class FeedbackListAPIView(ListAPIView):
 
 class FeedbackUserListAPIView(ListAPIView):
     """
-    Список всех отзывов определенного пользователя.
+    Список всех комментариев определенного пользователя.
     """
     serializer_class = FeedbackSerializer
     pagination_class = AdPaginator
@@ -108,7 +108,7 @@ class FeedbackUserListAPIView(ListAPIView):
 
 class FeedbackCreateAPIView(CreateAPIView):
     """
-    Создание отзыва.
+    Создание комментария.
     """
     serializer_class = FeedbackSerializer
     permission_classes = [IsAuthenticated]
@@ -119,7 +119,7 @@ class FeedbackCreateAPIView(CreateAPIView):
 
 class FeedbackDetailAPIView(RetrieveAPIView):
     """
-    Просмотр отзыва.
+    Просмотр комментария.
     """
     serializer_class = FeedbackSerializer
     queryset = Feedback.objects.all()
@@ -128,7 +128,7 @@ class FeedbackDetailAPIView(RetrieveAPIView):
 
 class FeedbackUpdateAPIView(UpdateAPIView):
     """
-    Редактирование отзыва.
+    Редактирование комментария.
     """
     serializer_class = FeedbackSerializer
     queryset = Feedback.objects.all()
@@ -137,7 +137,7 @@ class FeedbackUpdateAPIView(UpdateAPIView):
 
 class FeedbackDeleteAPIView(DestroyAPIView):
     """
-    Удаление отзыва.
+    Удаление комментария.
     """
     serializer_class = FeedbackSerializer
     queryset = Feedback.objects.all()
