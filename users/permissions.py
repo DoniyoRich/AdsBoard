@@ -7,7 +7,7 @@ class IsAdmin(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user.is_staff == True or request.user.is_superuser == True
+        return request.user.is_staff is True or request.user.is_superuser is True
 
 
 class IsOwner(permissions.BasePermission):
